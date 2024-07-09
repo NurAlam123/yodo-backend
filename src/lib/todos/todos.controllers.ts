@@ -8,7 +8,7 @@ import {
 
 // Get todo from the database
 export const getTodo = async (request: Request, response: Response) => {
-  const email = 'nuralam.rsc@gmail.com';
+  const { email } = request.user;
   const data = await TodoModel.where({ email });
   response.status(200).send(data);
 };
@@ -18,7 +18,8 @@ export const addTodo = async (
   request: Request<{}, {}, TodoPostRequestBodyType>,
   response: Response
 ) => {
-  const { email, content } = request.body;
+  const { email } = request.user;
+  const { content } = request.body;
 
   const lastID = (await TodoModel.where({ email })).length;
   const id = lastID + 1;
@@ -40,7 +41,8 @@ export const deleteTodo = async (
   request: Request<{}, {}, TodoDeleteRequestBodyType>,
   response: Response
 ) => {
-  const { id, email } = request.body;
+  const { email } = request.user;
+  const { id } = request.body;
   const foundTodo = await TodoModel.findOne({
     email,
     id,
@@ -63,7 +65,8 @@ export const updateTodo = async (
   request: Request<{}, {}, TodoUpdateRequestBodyType>,
   response: Response
 ) => {
-  const { id, email, content } = request.body;
+  const { email } = request.user;
+  const { id, content } = request.body;
 
   const foundTodo = await TodoModel.findOne({ email, id });
   if (!foundTodo) {

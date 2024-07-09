@@ -1,15 +1,4 @@
 export const createTodoValidationSchema = {
-  email: {
-    isEmail: {
-      errorMessage: 'Not an email.',
-    },
-    isString: {
-      errorMessage: 'Email should be a string.',
-    },
-    notEmpty: {
-      errorMessage: "Email shouldn't be empty.",
-    },
-  },
   content: {
     notEmpty: {
       errorMessage: "Content shouldn't be empty.",
@@ -29,17 +18,6 @@ export const deleteTodoValidationSchema = {
       errorMessage: "Todo id shouldn't be empty.",
     },
   },
-  email: {
-    isEmail: {
-      errorMessage: 'Not an email.',
-    },
-    isString: {
-      errorMessage: 'Email should be a string.',
-    },
-    notEmpty: {
-      errorMessage: "Email shouldn't be empty.",
-    },
-  },
 };
 
 export const updateTodoValidationSchema = {
@@ -49,17 +27,6 @@ export const updateTodoValidationSchema = {
     },
     notEmpty: {
       errorMessage: "Todo id shouldn't be empty.",
-    },
-  },
-  email: {
-    isEmail: {
-      errorMessage: 'Not an email.',
-    },
-    isString: {
-      errorMessage: 'Email should be a string.',
-    },
-    notEmpty: {
-      errorMessage: "Email shouldn't be empty.",
     },
   },
   content: {
