@@ -1,11 +1,17 @@
-export type TodoPostRequestBodyType = {
+type TodoPostRequestBodyType = {
+  id: string;
   content: string;
 };
 
-export type TodoDeleteRequestBodyType = {
-  id: number;
+type TodoDeleteRequestBodyType = {
+  id: string;
 };
-export type TodoUpdateRequestBodyType = {
-  id: number;
+type TodoUpdateRequestBodyType = {
+  id: string;
   content: string;
+  done: boolean;
+};
+
+type TodoExistRequestBodyType = {
+  id: string;
 };

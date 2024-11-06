@@ -1,10 +1,5 @@
 import { Request, Response } from 'express';
 import TodoModel from './todos.model';
-import {
-  TodoDeleteRequestBodyType,
-  TodoPostRequestBodyType,
-  TodoUpdateRequestBodyType,
-} from '../../@types/request';
 
 // Get todo from the database
 export const getTodo = async (request: Request, response: Response) => {
@@ -19,10 +14,7 @@ export const addTodo = async (
   response: Response
 ) => {
   const { email } = request.user;
-  const { content } = request.body;
-
-  const lastID = (await TodoModel.where({ email })).length;
-  const id = lastID + 1;
+  const { content, id } = request.body;
 
   const todo = new TodoModel({
     id,
@@ -66,7 +58,9 @@ export const updateTodo = async (
   response: Response
 ) => {
   const { email } = request.user;
-  const { id, content } = request.body;
+  const { id, content, done } = request.body;
+
+  console.log('patching', { id, content, done})
 
   const foundTodo = await TodoModel.findOne({ email, id });
   if (!foundTodo) {
@@ -75,8 +69,22 @@ export const updateTodo = async (
       .send({ success: false, message: 'Todo not found.', data: null });
     return;
   }
-  await foundTodo.updateOne({ content });
+  await foundTodo.updateOne({ content, done });
   response
     .status(200)
     .send({ success: true, message: 'Todo updated', data: null });
+};
+
+export const todoExist = async (
+  request: Request<{}, {}, TodoExistRequestBodyType>,
+  response: Response
+) => {
+  const { email } = request.user;
+  const { id } = request.body;
+  const foundTodo = await TodoModel.findOne({ email, id });
+  if (!foundTodo) {
+    response.send({ success: false, message: 'Not found.', data: { id } });
+    return;
+  }
+  response.send({ success: true, message: 'found', data: foundTodo });
 };

@@ -8,10 +8,9 @@ export const tokenVerify = (
   next: NextFunction
 ) => {
   try {
-    const { jwt } = request.cookies;
-    const user = verify(jwt, config.SECRET_TOKEN);
+    const { token } = request.cookies;
+    const user = verify(token, config.SECRET_TOKEN);
     request.user = user;
-    response.status(200).send({ success: true });
     next();
   } catch (err) {
     response.status(401).send({ success: false, message: 'Not Authorized.' });

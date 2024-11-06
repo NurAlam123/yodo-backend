@@ -1,9 +1,9 @@
 import { model, Schema } from 'mongoose';
-import { Todo } from '../../@types/todo';
 
 const TodoSchema = new Schema<Todo>({
   id: {
-    type: Number,
+    type: String,
+    required: true,
   },
   email: {
     type: String,
